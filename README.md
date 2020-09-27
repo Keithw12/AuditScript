@@ -1,4 +1,2 @@
-# AuditScript
-Allows auditing of personnel records for Information Assurance
-
-Excel VBA Scripts that allow the user to perform auditing tasks for Information Assurance records management.
+# General Information
+Gathers member data using file objects to audit personnel records for information assurance.
