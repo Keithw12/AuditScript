@@ -52,7 +52,7 @@ Function openMemberFolder(folderPath As String, row As Integer) As Folder
 End Function
 Function performFileCheck(fileName As String) As Integer
     'Compares file name to RegEx Patterns and returns a result of the check
-    'Check Return Values: 0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Security Briefing, 6 - 2875S, 7 - 2875N, 8 - ROB
+    'Check Return Values: 0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Sec Briefing, 6 - 2875S, 7 - 2875N, 8 - ROB
     Dim matchResult As Integer: matchResult = 0
     Dim regEx As New RegExp
     
@@ -79,26 +79,26 @@ Function performFileCheck(fileName As String) As Integer
         performFileCheck = 4
         Exit Function
     End If
-    regEx.Pattern = "Security Briefing"
+    regEx.Pattern = "Sec Briefing"
     If regEx.Test(fileName) Then
         performFileCheck = 5
         Exit Function
     End If
-    regEx.Pattern = "2875S"
+    regEx.Pattern = "2875-"
     If regEx.Test(fileName) Then
         performFileCheck = 6
         Exit Function
     Else
         regEx.Pattern = "2875"
         If regEx.Test(fileName) Then
-            regEx.Pattern = "SIPR"
+            regEx.Pattern = "----"
             If regEx.Test(fileName) Then
                 performFileCheck = 6
                 Exit Function
             End If
         End If
     End If
-    regEx.Pattern = "2875N"
+    regEx.Pattern = "2875-"
     If regEx.Test(fileName) Then
         performFileCheck = 7
         Exit Function
@@ -119,9 +119,9 @@ Private Sub createHeaderRow()
     Cells(1, 3) = "4394"
     Cells(1, 4) = "2842"
     Cells(1, 5) = "Derivative Classification"
-    Cells(1, 6) = "Security Briefing"
-    Cells(1, 7) = "2875S"
-    Cells(1, 8) = "2875N"
+    Cells(1, 6) = "Sec Briefing"
+    Cells(1, 7) = "2875-"
+    Cells(1, 8) = "2875-"
     Cells(1, 9) = "Rules of Behavior"
 End Sub
 
