@@ -3,7 +3,7 @@ Attribute VB_Name = "auditUnitScript"
 'Params:  result - a number that is a file identifier, row - the current row we are on
 Sub logResult(result As Integer, row As Integer)
     'Outputs the result of our file search
-    '0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Security Briefing, 6 - 2875S, 7 - 2875N, 8 - ROB
+    '0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Sec Briefing, 6 - 2875-, 7 - 2875--, 8 - ROB
     If result = 1 Then
         Cells(row, 2) = "X"
     ElseIf result = 2 Then
@@ -46,7 +46,7 @@ Function openMemberFolder(folderPath As String, row As Integer) As Folder
 End Function
 Function performFileCheck(fileName As String) As Integer
     'Compares file name to RegEx Patterns and returns a result of the check
-    'Check Return Values: 0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Security Briefing, 6 - 2875S, 7 - 2875N, 8 - ROB
+    'Check Return Values: 0 - No Match, 1 - 4433 Match, 2 - 4394, 3 - 2842, 4 - Deriv Classification, 5 - Sec Brief, 6 - 2875-, 7 - 2875--, 8 - ROB
     Dim matchResult As Integer: matchResult = 0
     Dim regEx As New RegExp
     
@@ -73,26 +73,26 @@ Function performFileCheck(fileName As String) As Integer
         performFileCheck = 4
         Exit Function
     End If
-    regEx.Pattern = "Security Briefing"
+    regEx.Pattern = "Sec Brief"
     If regEx.Test(fileName) Then
         performFileCheck = 5
         Exit Function
     End If
-    regEx.Pattern = "2875S"
+    regEx.Pattern = "2875-"
     If regEx.Test(fileName) Then
         performFileCheck = 6
         Exit Function
     Else
         regEx.Pattern = "2875"
         If regEx.Test(fileName) Then
-            regEx.Pattern = "SIPR"
+            regEx.Pattern = "----"
             If regEx.Test(fileName) Then
                 performFileCheck = 6
                 Exit Function
             End If
         End If
     End If
-    regEx.Pattern = "2875N"
+    regEx.Pattern = "2875--"
     If regEx.Test(fileName) Then
         performFileCheck = 7
         Exit Function
@@ -113,14 +113,14 @@ Private Sub createHeaderRow()
     Cells(1, 3) = "4394"
     Cells(1, 4) = "2842"
     Cells(1, 5) = "Derivative Classification"
-    Cells(1, 6) = "Security Briefing"
-    Cells(1, 7) = "2875S"
-    Cells(1, 8) = "2875N"
+    Cells(1, 6) = "Sec Brief"
+    Cells(1, 7) = "2875-"
+    Cells(1, 8) = "2875--"
     Cells(1, 9) = "Rules of Behavior"
 End Sub
 
 Sub MainMacro()
-    'Reference Windows Scfript Host Object Model
+    'Reference Windows Script Host Object Model
     Dim currentRow As Integer: currentRow = 2
     Dim nameCol As Integer: nameCol = 1
     Dim firstChar As String
